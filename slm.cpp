@@ -29,7 +29,9 @@ char calculate_next_char(string current_word, map<string, int> word_count, map<s
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist(1,sum);
     int r = dist(rng);
-    cout << "r is " << r << endl;
+    cout << "sum " << sum << endl;
+    cout << "r " << r << endl; 
+
     for (const auto& pair : word_follow_count[current_word]){
         r -= pair.second;
         if (r <= 0){
@@ -39,6 +41,25 @@ char calculate_next_char(string current_word, map<string, int> word_count, map<s
     cout << "There is a bug in the calculate_next_char fucntion" << endl; 
     return 'q';
 
+}
+
+string pick_start_word( map<string, int> word_count){
+    int sum =0;
+    for (const auto& pair : word_count){
+        sum+=pair.second;
+    }
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1,sum);
+    int r = dist(rng);
+    for (const auto& pair : word_count){
+        r -= pair.second;
+        if (r <= 0){
+            return pair.first;
+        }
+    }
+    cout << "uh oh"<<endl;
+    return 0;
 }
 
 int main (int argc, char *argv[]) {
@@ -87,6 +108,9 @@ int main (int argc, char *argv[]) {
         word_follow_count[chunk][next_letter]++;
         word_count[chunk]++;
     }
+     for (const auto& pair : word_count){
+        cout << pair.first << ":" <<pair.second<<endl;
+    }
     cout << "start" <<endl;
     for (const auto& pair : word_follow_count) {
         for (const auto& pair2 : pair.second) {
@@ -94,26 +118,21 @@ int main (int argc, char *argv[]) {
 
         }
     }
-    int a = 0;
-    int b = 0;
-    int c = 0;
 
-    for (int i =0; i<1000; i++){
-        char random_char = calculate_next_char("hu", word_count, word_follow_count);
-        if (random_char == 'a'){
-            a++;
-        }
-        if (random_char == 'b'){
-            b++;
-        }
-        if (random_char == 'c'){
-            c++;
-        }
-//        cout << random_char << endl<<endl;
+
+    int chars_printed = input_word_size;
+
+    string current_word = pick_start_word(word_count);
+
+    cout << "begin " << endl<<current_word;
+    while (chars_printed<output_word_zise){
+        char next_char = calculate_next_char(current_word, word_count, word_follow_count);
+        cout<<next_char;
+        current_word.erase(0,1);
+        current_word+=next_char;
+        chars_printed += 1;
     }
-    cout << a << endl;
-    cout << b << endl;
-    cout << c << endl;
+    cout << endl;
 
     return 0;
 }
