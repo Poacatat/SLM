@@ -3,10 +3,11 @@
 
 #include <string>
 #include <map>
+using namespace std;
 
 class Model{
     private:
-        int input_word_size
+        int input_word_size;
         map<string, int> word_count;
         map<string, map<char, int> > word_follow_count;
 

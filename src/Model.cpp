@@ -2,18 +2,19 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include "Generator.h"
 
 using namespace std;
 
 
-Model::Model(int inputWordSize) : inputWordSize(inputWordSize) {}
+Model::Model(int input_word_size) : input_word_size(input_word_size) {}
 
-void Model:train(const string& filename){
+void Model::train(const string& filename){
     ifstream myfile(filename);
     if (!myfile.is_open())
     {
-        cout << "Unable to open file " << argv[2];
-        usage();
+        cout << "Unable to open file " << filename;
+        Generator::usage();
         exit(1);
     }
         
@@ -65,9 +66,9 @@ std::string Model::pick_start_word() const {
     return 0;
 }
 
-char MarkovModel::calculate_next_char(const std::string& current_Word) const {
+char Model::calculate_next_char(const std::string& current_word) const {
     
-    int sum = word_count[current_word];
+    int sum = word_count.at(current_word);
 
     random_device dev;
     mt19937 rng(dev());
@@ -79,7 +80,7 @@ char MarkovModel::calculate_next_char(const std::string& current_Word) const {
     //cout <<endl<< "sum " << sum << endl;
     //cout << "r " << r << endl; 
 
-    for (const auto& pair : word_follow_count[current_word]){
+    for (const auto& pair : word_follow_count.at(current_word)){
         r -= pair.second;
         if (r <= 0){
             return pair.first;
