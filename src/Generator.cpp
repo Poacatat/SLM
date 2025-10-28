@@ -32,8 +32,5 @@ void Generator::generate(int input_word_size, const string& filename, int output
         current_word+=next_char;
         chars_printed ++;
     }
-    
-    //cout << "end " << endl<<current_word;
-
     cout << endl;
 }

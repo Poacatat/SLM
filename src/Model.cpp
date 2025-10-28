@@ -45,6 +45,13 @@ void Model::train(const string& filename){
 
         myfile.seekg(-(input_word_size - 1), ios_base::cur);
     }
+    for (const auto& outer : word_follow_count) {
+        cout << "'" << outer.first << "' follows -> ";
+        for (const auto& inner : outer.second) {
+            cout << "'" << inner.first << "': " << inner.second << "  ";
+        }
+        cout << endl;
+    }
 }
 
 std::string Model::pick_start_word() const {
@@ -66,8 +73,15 @@ std::string Model::pick_start_word() const {
     return 0;
 }
 
+char Model::random_letter() const {
+    return pick_start_word()[0];
+}
+
 char Model::calculate_next_char(const std::string& current_word) const {
-    
+    auto it = word_follow_count.find(current_word);
+    if (it == word_follow_count.end()) {
+        return random_letter();
+    }
     int sum = word_count.at(current_word);
 
     random_device dev;
@@ -76,9 +90,7 @@ char Model::calculate_next_char(const std::string& current_word) const {
     int r = dist(rng);
     
     
-    //cout <<endl<<  "Current word: '"<<current_word<<"'";
-    //cout <<endl<< "sum " << sum << endl;
-    //cout << "r " << r << endl; 
+    //cout <<endl<< r<<endl;
 
     for (const auto& pair : word_follow_count.at(current_word)){
         r -= pair.second;
@@ -86,6 +98,8 @@ char Model::calculate_next_char(const std::string& current_word) const {
             return pair.first;
         }
     }
+    
     cout << "There is a bug in the calculate_next_char fucntion" << endl << endl; 
+    cout << sum;
     return ' ';
 }
