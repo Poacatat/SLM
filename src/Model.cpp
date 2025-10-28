@@ -45,13 +45,13 @@ void Model::train(const string& filename){
 
         myfile.seekg(-(input_word_size - 1), ios_base::cur);
     }
-    for (const auto& outer : word_follow_count) {
-        cout << "'" << outer.first << "' follows -> ";
-        for (const auto& inner : outer.second) {
-            cout << "'" << inner.first << "': " << inner.second << "  ";
-        }
-        cout << endl;
-    }
+    //for (const auto& outer : word_follow_count) {
+    //    cout << "'" << outer.first << "' follows -> ";
+    //    for (const auto& inner : outer.second) {
+    //        cout << "'" << inner.first << "': " << inner.second << "  ";
+    //    }
+    //    cout << endl;
+    //}
 }
 
 std::string Model::pick_start_word() const {

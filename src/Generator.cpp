@@ -23,14 +23,15 @@ void Generator::generate(int input_word_size, const string& filename, int output
     model.train(filename);
     string current_word = model.pick_start_word();
 
-    cout << "begin " << endl<<current_word;
+    //cout << "begin " << endl<<current_word;
     int chars_printed = input_word_size;
+    std::string output = current_word;
     while (chars_printed<output_word_zise){
         char next_char = model.calculate_next_char(current_word);
-        cout<<next_char;
+        output += next_char;
         current_word.erase(0,1);
         current_word+=next_char;
         chars_printed ++;
     }
-    cout << endl;
+    cout << output << endl;
 }
