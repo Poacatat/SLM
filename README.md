@@ -11,12 +11,12 @@ Contents
 Installation
 ------------
 1. Clone the repository:<br>
-    git clone <repository-url>
-2. Enter the project directory:
+    git clone <https://github.com/Poacatat/SLM>
+2. Enter the project directory:<br>
     cd slm
-3. Make the program:
+3. Make the program:<br>
     make
-4. Run the binary:
+4. Run the binary:<br>
     ./slm \<input_word_length\> example.txt \<total_output_length\>
 
 Code
