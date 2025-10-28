@@ -10,7 +10,7 @@ Contents
 
 Installation
 ------------
-1. Clone the repository:
+1. Clone the repository:<br>
     git clone <repository-url>
 2. Enter the project directory:
     cd slm
